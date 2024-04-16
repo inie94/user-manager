@@ -1,0 +1,244 @@
+openapi: 3.0.3
+info:
+  title: Swagger UsersAPI - OpenAPI 3.0
+  description: |-
+    Упрашенная демонстрационная спецификация серверного приложения, описывающая функции управления пользователями.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+tags:
+  - name: users
+    description: Операции над пользователем
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: 'Операция получения всех пользователей'
+      description: ''
+      operationId: getUsers
+      responses:
+        '200':
+          description: 'Операция получения всех пользователей выполнена успешно'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              example:
+                - firstName: 'Павел'
+                  lastName: 'Никонов'
+                  email: 'pnick@gmail.com'
+                  birthDate: '2010-04-16'
+                - firstName: 'Иван'
+                  lastName: 'Федоров'
+                  email: 'ifed@ya.ru'
+                  birthDate: '2007-04-16'
+    post:
+      tags:
+        - users
+      summary: 'Операция создания пользователя'
+      description: ''
+      operationId: createUser
+      requestBody:
+        description: 'Запрос на создание пользователя'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            example:
+              firstName: 'John'
+              lastName: 'James'
+              email: 'john@email.com'
+              birthDate: '2024-04-16'
+      responses:
+        '200':
+          description: 'Операция создания пользователя выполнена успешно'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Ошибка валлидации запроса'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 'VALIDATION_ERROR'
+                messages:
+                  - "Поле 'Имя' заполнено не верно"
+                  - "Поле 'Фамилия' заполнено не верно"
+                  - "Поле 'Адрес электронной почты' заполнено не верно"
+  /users/{userId}:
+    get:
+      tags:
+        - users
+      summary: 'Операция получения пользователя'
+      description: ''
+      operationId: getUserById
+      parameters:
+        - name: userId
+          in: path
+          description: 'Уникальный идентификатор пользователя'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'Операция получения пользователя выполнена успешно'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Ошибка валлидации запроса'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 'VALIDATION_ERROR'
+                messages:
+                  - "Идентификатор пользователя заполнен не верно"
+        '404':
+          description: 'Пользователь не найден'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 'USER_NOT_FOUND_ERROR'
+                messages:
+                  - "Пользователь с идентификатором '123456' не найден"
+    put:
+      tags:
+        - users
+      summary: 'Операция изменения данных пользователя'
+      description: ''
+      operationId: updateUser
+      parameters:
+        - name: userId
+          in: path
+          description: 'Уникальный идентификатор пользователя'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: 'Запрос на изменение данных пользователя'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: 'Операция изменения данных пользователя выполнена успешно'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Ошибка валлидации запроса'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 'VALIDATION_ERROR'
+                messages:
+                  - "Поле 'Имя' заполнено не верно"
+                  - "Поле 'Фамилия' заполнено не верно"
+                  - "Поле 'Адрес электронной почты' заполнено не верно"
+        '404':
+          description: 'Пользователь не найден'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 'USER_NOT_FOUND_ERROR'
+                messages:
+                  - "Пользователь с идентификатором '123456' не найден"
+    delete:
+      tags:
+        - users
+      summary: 'Операция удаления пользователя'
+      description: ''
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: 'Уникальный идентификатор пользователя'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'Операция удаления пользователя выполнена успешно'
+        '400':
+          description: 'Ошибка валлидации запроса'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 'VALIDATION_ERROR'
+                messages:
+                  - "Идентификатор пользователя заполнен не верно"
+        '404':
+          description: 'Пользователь не найден'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 'USER_NOT_FOUND_ERROR'
+                messages:
+                  - "Пользователь с идентификатором '123456' не найден"
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+        - birthDate
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        firstName:
+          type: string
+          pattern: ^[A-Za-zА-Яа-я]{1,256}$
+          example: John
+        lastName:
+          type: string
+          pattern: ^[A-Za-zА-Яа-я]{1,256}$
+          example: James
+        email:
+          type: string
+          pattern: ^(\S+@\S+.[\w]{2,4}){1,256}$
+          example: john@email.com
+        birthDate:
+          type: string
+          format: date
+    Error:
+      type: object
+      required:
+        - code
+        - messages
+      properties:
+        code:
+          type: string
+          pattern: ^([\S][\s\S][\S]){1,256}$
+        messages:
+          type: array
+          items:
+            type: string
+            pattern: ^([\S][\s\S][\S]){1,256}$
