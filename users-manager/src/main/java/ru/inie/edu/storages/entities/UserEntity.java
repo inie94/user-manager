@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.action.internal.UnresolvedEntityInsertActions;
 import ru.inie.edu.services.models.User;
 
 import java.sql.Date;
@@ -21,11 +20,11 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    @Column(name = "firstname", length = 255, nullable = false)
+    @Column(name = "firstname", nullable = false)
     private String firstName;
-    @Column(name = "lastName", length = 255, nullable = false)
+    @Column(name = "lastName", nullable = false)
     private String lastName;
-    @Column(name = "email", length = 255, nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "birthDate", nullable = false)
     @Temporal(TemporalType.DATE)
