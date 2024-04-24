@@ -215,15 +215,15 @@ components:
           example: 10
         firstName:
           type: string
-          pattern: ^[A-Za-zА-Яа-я]{1,256}$
+          pattern: ^[A-Za-zА-Яа-я]{1,255}$
           example: John
         lastName:
           type: string
-          pattern: ^[A-Za-zА-Яа-я]{1,256}$
+          pattern: ^[A-Za-zА-Яа-я]{1,255}$
           example: James
         email:
           type: string
-          pattern: ^(\S+@\S+.[\w]{2,4}){1,256}$
+          pattern: ^(\S+@\S+.[\w]{2,4}){1,255}$
           example: john@email.com
         birthDate:
           type: string
@@ -236,9 +236,9 @@ components:
       properties:
         code:
           type: string
-          pattern: ^([\S][\s\S][\S]){1,256}$
+          pattern: ^([\S][\s\S][\S]){1,255}$
         messages:
           type: array
           items:
             type: string
-            pattern: ^([\S][\s\S][\S]){1,256}$
+            pattern: ^([\S][\s\S][\S]){1,255}$
