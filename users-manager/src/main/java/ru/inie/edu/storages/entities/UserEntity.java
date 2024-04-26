@@ -30,7 +30,7 @@ public class UserEntity {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
-    public UserEntity fill(User user) {
+    public UserEntity updated(User user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();

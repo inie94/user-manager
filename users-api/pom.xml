@@ -72,7 +72,7 @@
 
                                 </additionalModelTypeAnnotation>
                                 <dateLibrary>legacy</dateLibrary>
-                                <useBeanValidation>false</useBeanValidation>
+<!--                                <useBeanValidation>false</useBeanValidation>-->
                             </configOptions>
                             <generateSupportingFiles>false</generateSupportingFiles>
                         </configuration>

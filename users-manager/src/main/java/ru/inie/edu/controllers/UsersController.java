@@ -2,15 +2,22 @@ package ru.inie.edu.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import ru.inie.edu.exceptions.handlers.ErrorTypeExceptionHandler;
 import ru.inie.edu.services.UserService;
+import ru.inie.edu.services.models.Error;
 import ru.inie.edu.services.models.User;
+import ru.inie.edu.services.models.mappers.ErrorMapper;
 import ru.inie.edu.services.models.mappers.UserMapper;
 import ru.inie.edu.users.v1.api.UsersApi;
+import ru.inie.edu.users.v1.models.ErrorDto;
 import ru.inie.edu.users.v1.models.UserDto;
 
 import java.util.List;
 
+//@Validated
 @RestController
 @RequiredArgsConstructor
 public class UsersController implements UsersApi {
@@ -47,5 +54,14 @@ public class UsersController implements UsersApi {
         User user = UserMapper.convertToModel(userId, userDto);
         User updatedUser = service.updateUser(user);
         return ResponseEntity.ok(UserMapper.convertToDto(updatedUser));
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<ErrorDto> onRuntimeException(Throwable exception) {
+        exception.printStackTrace();
+        Error error = ErrorTypeExceptionHandler.getByClass(exception.getClass())
+                .getErrorDtoSupplier()
+                .apply(exception);
+        return ResponseEntity.status(error.getType().getHttpStatus()).body(ErrorMapper.convertToDto(error));
     }
 }
