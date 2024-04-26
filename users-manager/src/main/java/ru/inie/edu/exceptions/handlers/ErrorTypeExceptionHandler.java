@@ -8,13 +8,11 @@ import ru.inie.edu.exceptions.ExceptionMessage;
 import ru.inie.edu.exceptions.UserNotFoundException;
 import ru.inie.edu.services.models.Error;
 import ru.inie.edu.services.models.enums.ErrorType;
-import ru.inie.edu.users.v1.models.ErrorDto;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Getter

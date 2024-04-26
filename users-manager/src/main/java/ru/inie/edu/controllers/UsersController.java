@@ -2,7 +2,6 @@ package ru.inie.edu.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import ru.inie.edu.exceptions.handlers.ErrorTypeExceptionHandler;
